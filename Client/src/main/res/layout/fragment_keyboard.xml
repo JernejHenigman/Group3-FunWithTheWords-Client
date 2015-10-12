@@ -1,0 +1,217 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.hrust16.group3_funwithwords_client.KeyboardFragment">
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="hello" />
+
+        <EditText
+            android:id="@+id/et_word"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Type the word"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_1"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="Q"/>
+
+        <Button
+            android:id="@+id/btn_2"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="W"/>
+
+        <Button
+            android:id="@+id/btn_3"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="E"/>
+
+        <Button
+            android:id="@+id/btn_4"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="R"/>
+
+        <Button
+            android:id="@+id/btn_5"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="T"/>
+
+        <Button
+            android:id="@+id/btn_6"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="Y"/>
+
+        <Button
+            android:id="@+id/btn_7"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="U"/>
+
+        <Button
+            android:id="@+id/btn_8"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="I"/>
+
+        <Button
+            android:id="@+id/btn_9"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="O"/>
+
+        <Button
+            android:id="@+id/btn_10"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="P"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_11"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="A"/>
+
+        <Button
+            android:id="@+id/btn_12"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="S"/>
+
+        <Button
+            android:id="@+id/btn_13"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="D"/>
+
+        <Button
+            android:id="@+id/btn_14"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="F"/>
+
+        <Button
+            android:id="@+id/btn_15"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="G"/>
+
+        <Button
+            android:id="@+id/btn_16"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="H"/>
+
+        <Button
+            android:id="@+id/btn_17"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="J"/>
+
+        <Button
+            android:id="@+id/btn_18"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="K"/>
+
+        <Button
+            android:id="@+id/btn_19"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="L"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginLeft="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_20"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="Z"/>
+
+        <Button
+            android:id="@+id/btn_21"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="X"/>
+
+        <Button
+            android:id="@+id/btn_22"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="C"/>
+
+        <Button
+            android:id="@+id/btn_23"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="V"/>
+
+        <Button
+            android:id="@+id/btn_24"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="B"/>
+
+        <Button
+            android:id="@+id/btn_25"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="N"/>
+
+        <Button
+            android:id="@+id/btn_26"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="M"/>
+
+        <Button
+            android:id="@+id/btn_99"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

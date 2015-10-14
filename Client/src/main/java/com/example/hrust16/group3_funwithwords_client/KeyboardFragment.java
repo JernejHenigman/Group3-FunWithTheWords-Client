@@ -3,6 +3,7 @@ package com.example.hrust16.group3_funwithwords_client;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,7 +143,7 @@ public class KeyboardFragment extends Fragment {
         btnY.setOnClickListener(new BLAdd(btnY.getText().toString()));
         btnZ.setOnClickListener(new BLAdd(btnZ.getText().toString()));
 
-        //btnDelete.setOnClickListener(new BLDelete());
+        btnDelete.setOnClickListener(new BLDelete());
     }
 
     private class BLAdd implements View.OnClickListener {
@@ -157,10 +158,21 @@ public class KeyboardFragment extends Fragment {
         @Override
         public void onClick(View v)
         {
-            Button b = (Button)v;
-            String buttonText = b.getText().toString();
-            Constants.myFirebaseRef.child(Constants.userName).child("Letter").setValue(buttonText);  //Set the x Value
 
+            Button b = (Button) v;
+            String buttonText = b.getText().toString();
+            Constants.myFirebaseRef.child(Constants.userName).child("Letter").setValue(buttonText);
+
+
+        }
+    }
+
+    private class BLDelete implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Constants.myFirebaseRef.child(Constants.userName).child("DeleteButton").setValue("del1");
+            Log.i("Delete", "Delete");
         }
     }
 

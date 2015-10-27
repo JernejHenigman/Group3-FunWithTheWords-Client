@@ -1,6 +1,8 @@
 package com.example.hrust16.group3_funwithwords_client;
 
 
+import android.graphics.Color;
+
 import com.firebase.client.Firebase;
 
 /**
@@ -11,4 +13,7 @@ public class Constants {
     //Since this is static it will be instansiated  at startup of the App
     //Use static for variables that you want to reach from anywhere in the app...
     public static Firebase myFirebaseRef = new Firebase("https://funwithwords.firebaseio.com/");
+    public static int uniqueID = -1;
+    public static int[] colors = {Color.RED,Color.GREEN,Color.BLUE,Color.YELLOW};
+
 }

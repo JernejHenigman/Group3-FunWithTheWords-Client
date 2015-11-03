@@ -29,8 +29,10 @@ public class Results extends Fragment {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_results, container, false);
         View reconnectBtn = v.findViewById(R.id.newGameBtn);
+        reconnectBtn.setVisibility(View.INVISIBLE);
         Log.i("ResultsFragment", "We are in onCreateView");
 
+/*
         reconnectBtn.setOnClickListener(new View.OnClickListener() {
             //Click on loginButton
             @Override
@@ -43,7 +45,7 @@ public class Results extends Fragment {
                 ft.commit();
 
             }
-        });
+        });*/
         return v;
     }
 

@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -22,7 +21,7 @@ import com.firebase.client.ValueEventListener;
 
 
 
-public class LoginFragment extends Fragment implements ValueEventListener {
+public class LoginFragment extends Fragment {
 
 
     Firebase fb;
@@ -48,7 +47,40 @@ public class LoginFragment extends Fragment implements ValueEventListener {
             public void onClick(View v) {
 
                 firebaseEntryForScreenNbr = Constants.myFirebaseRef.child("ScreenNbr");
-                vel = firebaseEntryForScreenNbr.addValueEventListener(LoginFragment.this);
+                vel = firebaseEntryForScreenNbr.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Object value = dataSnapshot.getValue();
+                        if (value != null) {
+                            Log.i("LoginFragmen", "We are in onDataChange: "+value);
+                            String screenNbrFromFirebase = String.valueOf((long) value);
+                            EditText screenNumber = (EditText) getActivity().findViewById(R.id.screenNumber);
+                            EditText name = (EditText) getActivity().findViewById(R.id.name);
+
+                            //Are we on the right screen
+                            if (screenNbrFromFirebase.equals(screenNumber.getText().toString()))
+                            {
+                                Constants.userName = name.getText().toString();
+                                FragmentManager fm = getActivity().getSupportFragmentManager();
+                                FragmentTransaction ft = fm.beginTransaction();
+                                ft.replace(R.id.container, new AssignUserRole());
+                                ft.commit();
+
+                            }
+                            else
+                            {
+                                Toast.makeText(getActivity(),"Not the correct Screen",Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
                 v.setClickable(false);
 
             }
@@ -56,36 +88,5 @@ public class LoginFragment extends Fragment implements ValueEventListener {
         return returnView;
     }
 
-    @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {
-        Object value = dataSnapshot.getValue();
-        if (value != null) {
-            Log.i("LoginFragmen", "We are in onDataChange: "+value);
-            String screenNbrFromFirebase = String.valueOf((long) value);
-            EditText screenNumber = (EditText) getActivity().findViewById(R.id.screenNumber);
-            EditText name = (EditText) getActivity().findViewById(R.id.name);
-            Constants.userName = name.getText().toString();
-            //Are we on the right screen
-            if (screenNbrFromFirebase.equals(screenNumber.getText().toString()))
-            {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.container, new AssignUserRole());
-                ft.commit();
 
-            }
-            else
-            {
-                Toast.makeText(getActivity(),"Not the correct Screen",Toast.LENGTH_LONG).show();
-            }
-
-
-        }
-
-    }
-
-    @Override
-    public void onCancelled(FirebaseError firebaseError) {
-
-    }
 }

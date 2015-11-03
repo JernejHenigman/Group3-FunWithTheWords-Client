@@ -27,7 +27,7 @@ import java.util.Random;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class KeyboardFragment extends Fragment implements ValueEventListener {
+public class KeyboardFragment extends Fragment {
 
     View view;
 
@@ -122,11 +122,80 @@ public class KeyboardFragment extends Fragment implements ValueEventListener {
         change = 1;
         rand = new Random();
         background = (LinearLayout)view.findViewById(R.id.keyboard_background);
-        background.setBackgroundColor(Constants.colors[Constants.uniqueID]);
+        background.setBackgroundColor(Constants.color);
         HideKeyboard();
 
         enKey = Constants.myFirebaseRef.child("InfoToClient");
-        enbKeyB = enKey.addValueEventListener(KeyboardFragment.this);
+        enbKeyB = enKey.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Object valueFromFB = dataSnapshot.getValue();
+                if (valueFromFB != null) {
+                    String stringValueFB = valueFromFB.toString();
+                    Log.i("KeyBoardFragment","We are in dataChange: "+stringValueFB);
+                    if (stringValueFB.equals("True")) // enable keyBoard
+                    {
+
+                        mUser.setEnableKeybaord();
+                        Log.i("KEYe", "KeyboardEnabled");
+
+                    }
+                    else if (stringValueFB.equals("False")) //Disable keybaord
+                    {
+                        mUser.setDisableKeybaord();
+                        Log.i("KEYd", "KeyboardDisabled");
+                    }
+                    else if (stringValueFB.equals("NewRound")) //New round
+                    {
+                        mUser.setWinnerFalse();
+                        mUser.resetWord();
+                        DefaultKeyboard();
+                    }
+                    else if (stringValueFB.equals("GameIsFinished"))
+                    {
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        ft.replace(R.id.container, new Results());
+                        ft.commit();
+                        enKey.removeEventListener(enbKeyB);
+
+                    }
+
+                    else // If none of the above, then client recieves unique number of winning player
+                    {
+                        if (Integer.parseInt(stringValueFB) == Constants.uniqueID) { //if winner
+                            mUser.setWinnerTrue();
+                        }
+                        else //if not winner, keybaord gets scrambled
+                        {
+                            if (change == 1) {
+                                change = 2;
+                            }
+                            else if (change == 2)
+                            {
+                                change = 3;
+                            }
+                            else if (change == 3)
+                            {
+                                change = 1;
+                            }
+                            if (!mUser.getWinner()) {
+                                Log.i("Change: ",""+change);
+                                vibrator.vibrate(500);
+                                ChangeKeyboard(change);
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
         Log.i("KeyBoardFragment","We are in onCreateView");
 
 
@@ -345,74 +414,6 @@ public class KeyboardFragment extends Fragment implements ValueEventListener {
         ButtonInitializer();
     }
 
-    @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {
-        Object valueFromFB = dataSnapshot.getValue();
-        if (valueFromFB != null) {
-            String stringValueFB = valueFromFB.toString();
-            Log.i("KeyBoardFragment","We are in dataChange: "+stringValueFB);
-            if (stringValueFB.equals("True")) // enable keyBoard
-            {
-
-                mUser.setEnableKeybaord();
-                Log.i("KEYe", "KeyboardEnabled");
-
-            }
-            else if (stringValueFB.equals("False")) //Disable keybaord
-            {
-                mUser.setDisableKeybaord();
-                Log.i("KEYd", "KeyboardDisabled");
-            }
-            else if (stringValueFB.equals("NewRound")) //New round
-            {
-                mUser.setWinnerFalse();
-                mUser.resetWord();
-                DefaultKeyboard();
-            }
-            else if (stringValueFB.equals("GameIsFinished"))
-            {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.container, new Results());
-                ft.commit();
-                enKey.removeEventListener(enbKeyB);
-
-            }
-
-            else // If none of the above, then client recieves unique number of winning player
-            {
-                if (Integer.parseInt(stringValueFB) == Constants.uniqueID) { //if winner
-                    mUser.setWinnerTrue();
-                }
-                else //if not winner, keybaord gets scrambled
-                {
-                    if (change == 1) {
-                        change = 2;
-                    }
-                    else if (change == 2)
-                    {
-                        change = 3;
-                    }
-                    else if (change == 3)
-                    {
-                        change = 1;
-                    }
-                    if (!mUser.getWinner()) {
-                        Log.i("Change: ",""+change);
-                        vibrator.vibrate(500);
-                        ChangeKeyboard(change);
-                    }
-                }
-            }
-
-        }
-    }
-
-
-    @Override
-    public void onCancelled(FirebaseError firebaseError) {
-
-    }
 
 
     private class BLAdd implements View.OnClickListener {
@@ -430,7 +431,7 @@ public class KeyboardFragment extends Fragment implements ValueEventListener {
 
             Button b = (Button) v;
             String buttonText = b.getText().toString();
-            if (mUser.getKeyboardState() && !mUser.getWinner()) {
+            if (mUser.getKeyboardState() && !mUser.getWinner() && mUser.getWord().length() < 10) {
                 mUser.addLetter(buttonText);
                 Constants.myFirebaseRef.child(Constants.userName).child("KeyboardEvent").setValue(mUser.getWord());
             }

@@ -68,6 +68,14 @@ public class User {
          return keyboardState;
     }
 
+    public void setUniqueID(int ID) {
+        this.uniqueID = ID;
+    }
+
+    public int getUniqueID() {
+        return uniqueID;
+    }
+
 
 
 }

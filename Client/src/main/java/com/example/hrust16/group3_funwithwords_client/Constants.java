@@ -14,6 +14,6 @@ public class Constants {
     //Use static for variables that you want to reach from anywhere in the app...
     public static Firebase myFirebaseRef = new Firebase("https://funwithwords.firebaseio.com/");
     public static int uniqueID = -1;
-    public static int[] colors = {Color.RED,Color.GREEN,Color.BLUE,Color.YELLOW};
+    public static int color = -1;
 
 }

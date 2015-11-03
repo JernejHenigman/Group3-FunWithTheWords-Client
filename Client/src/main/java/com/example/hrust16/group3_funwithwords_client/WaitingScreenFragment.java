@@ -19,7 +19,7 @@ import com.firebase.client.ValueEventListener;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WaitingScreenFragment extends Fragment implements ValueEventListener{
+public class WaitingScreenFragment extends Fragment{
 
     Firebase transitToKeyboardFB;
     ValueEventListener ttKbFB;
@@ -35,29 +35,30 @@ public class WaitingScreenFragment extends Fragment implements ValueEventListene
         View returnView =  inflater.inflate(R.layout.fragment_waiting_screen, container, false);
         Log.i("WaitingScreenFragment","We are in onCreateView");
         transitToKeyboardFB = Constants.myFirebaseRef.child("GameStart");
-        ttKbFB = transitToKeyboardFB.addValueEventListener(WaitingScreenFragment.this);
+        ttKbFB = transitToKeyboardFB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Object value = dataSnapshot.getValue();
+                if (value != null) {
+                    if (value.toString().equals("GameStart")) {
+                        Log.i("WaitingScreenFragment","We are in on change");
+                        FragmentManager fm = getFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        ft.replace(R.id.container, new KeyboardFragment());
+                        ft.commit();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
 
         return returnView;
     }
 
 
-    @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {
-        Object value = dataSnapshot.getValue();
-        if (value != null) {
-            if (value.toString().equals("GameStart")) {
-                Log.i("WaitingScreenFragment","We are in on change");
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.container, new KeyboardFragment());
-                ft.commit();
-            }
-        }
-    }
-
-    @Override
-    public void onCancelled(FirebaseError firebaseError) {
-
-    }
 }

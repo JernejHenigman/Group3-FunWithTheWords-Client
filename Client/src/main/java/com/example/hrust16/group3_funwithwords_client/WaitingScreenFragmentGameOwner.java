@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -21,7 +20,7 @@ import com.firebase.client.ValueEventListener;
 /**
  * A simple {@linffk Fragment} subclass.
  */
-public class WaitingScreenFragmentGameOwner extends Fragment implements ValueEventListener {
+public class WaitingScreenFragmentGameOwner extends Fragment {
 
     Firebase numOfPlayersConnectedListener;
     ValueEventListener nopclr;
@@ -41,7 +40,32 @@ public class WaitingScreenFragmentGameOwner extends Fragment implements ValueEve
         View v =  inflater.inflate(R.layout.fragment_waiting_screen_fragment_game_owner, container, false);
         startGameButton = v.findViewById(R.id.buttonStartGame);
         numOfPlayersConnectedListener = Constants.myFirebaseRef.child("AssignUserRole");
-        nopclr = numOfPlayersConnectedListener.addValueEventListener(WaitingScreenFragmentGameOwner.this);
+        nopclr = numOfPlayersConnectedListener.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Object valueFB = dataSnapshot.getValue();
+                if (valueFB != null) {
+                    Log.i("WaitingGamerOwner", "We are in onDataChange: "+valueFB);
+                    numOfPlayersConnected = Integer.parseInt(valueFB.toString());
+                    Log.i("NumOfPlayersConnecetd: ",""+numOfPlayersConnected);
+                    if (numOfPlayersConnected < 1 ) {
+                        startGameButton.setClickable(false);
+                    }
+                    else
+                    {
+                        startGameButton.setClickable(true);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
         Log.i("WaitingGamerOwner", "We are in onCreateaView");
         startGameButton.setClickable(true);
         startGameButton.setOnClickListener(new View.OnClickListener() {
@@ -61,30 +85,5 @@ public class WaitingScreenFragmentGameOwner extends Fragment implements ValueEve
 
         return v;
     }
-
-    @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {
-        Object valueFB = dataSnapshot.getValue();
-        if (valueFB != null) {
-            Log.i("WaitingGamerOwner", "We are in onDataChange: "+valueFB);
-            numOfPlayersConnected = Integer.parseInt(valueFB.toString());
-            Log.i("NumOfPlayersConnecetd: ",""+numOfPlayersConnected);
-            if (numOfPlayersConnected < 1 ) {
-                startGameButton.setClickable(false);
-            }
-            else
-            {
-                startGameButton.setClickable(true);
-            }
-        }
-
-    }
-
-    @Override
-    public void onCancelled(FirebaseError firebaseError) {
-
-    }
-
-
 
 }

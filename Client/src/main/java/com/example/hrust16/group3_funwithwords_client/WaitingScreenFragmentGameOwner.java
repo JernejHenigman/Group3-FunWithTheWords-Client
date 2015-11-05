@@ -39,7 +39,7 @@ public class WaitingScreenFragmentGameOwner extends Fragment {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_waiting_screen_fragment_game_owner, container, false);
         startGameButton = v.findViewById(R.id.buttonStartGame);
-        numOfPlayersConnectedListener = Constants.myFirebaseRef.child("AssignUserRole");
+        numOfPlayersConnectedListener = Constants.myFirebaseRef.child("NumOfPlayers");
         nopclr = numOfPlayersConnectedListener.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

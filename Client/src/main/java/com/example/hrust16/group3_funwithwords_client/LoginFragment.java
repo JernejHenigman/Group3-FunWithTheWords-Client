@@ -60,11 +60,13 @@ public class LoginFragment extends Fragment {
                             //Are we on the right screen
                             if (screenNbrFromFirebase.equals(screenNumber.getText().toString()))
                             {
+                                Log.i("LoginFragmen", "IF: "+value);
                                 Constants.userName = name.getText().toString();
                                 FragmentManager fm = getActivity().getSupportFragmentManager();
                                 FragmentTransaction ft = fm.beginTransaction();
                                 ft.replace(R.id.container, new AssignUserRole());
                                 ft.commit();
+                                Log.i("LoginFragmen", "IF: " + value);
 
                             }
                             else
